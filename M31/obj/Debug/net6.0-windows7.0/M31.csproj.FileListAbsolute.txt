@@ -1,0 +1,17 @@
+D:\git\M31\M31\bin\Debug\net6.0-windows7.0\M31.exe
+D:\git\M31\M31\bin\Debug\net6.0-windows7.0\M31.deps.json
+D:\git\M31\M31\bin\Debug\net6.0-windows7.0\M31.runtimeconfig.json
+D:\git\M31\M31\bin\Debug\net6.0-windows7.0\M31.dll
+D:\git\M31\M31\bin\Debug\net6.0-windows7.0\M31.pdb
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.csproj.AssemblyReference.cache
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.Form1.resources
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.csproj.GenerateResource.cache
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.GeneratedMSBuildEditorConfig.editorconfig
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.AssemblyInfoInputs.cache
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.AssemblyInfo.cs
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.csproj.CoreCompileInputs.cache
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.dll
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\refint\M31.dll
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.pdb
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\M31.genruntimeconfig.cache
+D:\git\M31\M31\obj\Debug\net6.0-windows7.0\ref\M31.dll

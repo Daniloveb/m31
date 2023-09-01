@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="M31.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ansible_file_in_path" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/opt/m31/in/</Value>
+    </Setting>
+    <Setting Name="ansible_local_user" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">user</Value>
+    </Setting>
+    <Setting Name="ansiblehost" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">vans.domain.ru</Value>
+    </Setting>
+    <Setting Name="domainname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">domain.ru</Value>
+    </Setting>
+    <Setting Name="ansible_local_user_pass" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">[bNv9Sc@-~;</Value>
+    </Setting>
+    <Setting Name="ou_resources" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OU=Admin,OU=_WebAdmin,DC=domain,Dc=ru</Value>
+    </Setting>
+    <Setting Name="ou_admin_groups" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OU=_WebAdmin,DC=domain,Dc=ru</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
