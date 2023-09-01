@@ -62,12 +62,12 @@ namespace M31
             PrincipalContext pc_ou_resources = new PrincipalContext(ContextType.Domain, domainname, Properties.Settings.Default.ou_resources);
             PrincipalContext pc_ou_admin_groups = new PrincipalContext(ContextType.Domain, domainname, Properties.Settings.Default.ou_admin_groups);
             GroupPrincipal Admin_gp = GroupPrincipal.FindByIdentity(pc_ou_admin_groups, "gaa_fullAdmins");
-            // удаляем админcкий tab
+            // СѓРґР°Р»СЏРµРј Р°РґРјРёРЅcРєРёР№ tab
             if (!up_cur.IsMemberOf(Admin_gp))
             {
                 this.tabs.TabPages.Remove(tabPage3);
             }
-            //Выбираем группы в которые есть доступ и добавляем в cmd_resources
+            //Р’С‹Р±РёСЂР°РµРј РіСЂСѓРїРїС‹ РІ РєРѕС‚РѕСЂС‹Рµ РµСЃС‚СЊ РґРѕСЃС‚СѓРї Рё РґРѕР±Р°РІР»СЏРµРј РІ cmd_resources
             GroupPrincipal gp = new GroupPrincipal(pc_ou_resources);
             PrincipalSearcher searcher = new PrincipalSearcher(gp);
             PrincipalSearchResult<Principal> groups = searcher.FindAll();
@@ -89,7 +89,7 @@ namespace M31
             cmd_Resources.SelectedIndex = 0;
         }
 
-        //Проверки и сборка дерева
+        //РџСЂРѕРІРµСЂРєРё Рё СЃР±РѕСЂРєР° РґРµСЂРµРІР°
         public void working_with_selected_group(GroupPrincipal select_gp)
         {
             tree_folders.Nodes.Clear();
@@ -100,7 +100,7 @@ namespace M31
             ou_path = select_de.Properties["Info"].Value.ToString();
             if (ou_path == null)
             {
-                MessageBox.Show("Описание группы не заполнено! " + select_de.Name, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹ РЅРµ Р·Р°РїРѕР»РЅРµРЅРѕ! " + select_de.Name, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             DirectoryEntry OU_entry = null;
@@ -111,14 +111,14 @@ namespace M31
             }
             else
             {
-                MessageBox.Show("OU ресурса не найдено! " + ou_path, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("OU СЂРµСЃСѓСЂСЃР° РЅРµ РЅР°Р№РґРµРЅРѕ! " + ou_path, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
              
-            //Читаем аттрибуты ресурсного OU
+            //Р§РёС‚Р°РµРј Р°С‚С‚СЂРёР±СѓС‚С‹ СЂРµСЃСѓСЂСЃРЅРѕРіРѕ OU
             if (OU_entry.Properties["l"].Value is null || OU_entry.Properties["street"].Value is null)
             {
-                MessageBox.Show("Не заполнены свойства OU ресурса! " + select_de.Name, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("РќРµ Р·Р°РїРѕР»РЅРµРЅС‹ СЃРІРѕР№СЃС‚РІР° OU СЂРµСЃСѓСЂСЃР°! " + select_de.Name, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             //string str_descr = OU_entry.Properties["Description"].Value.ToString();
@@ -129,14 +129,14 @@ namespace M31
             PrincipalContext pc_ou_otdel = new PrincipalContext(ContextType.Domain, domainname, ou_path);
             GroupPrincipal gp_ou_otdel = new GroupPrincipal(pc_ou_otdel);
             PrincipalSearcher searcher_ou_otdel = new PrincipalSearcher(gp_ou_otdel);
-            //Выбираем все группы в OU
+            //Р’С‹Р±РёСЂР°РµРј РІСЃРµ РіСЂСѓРїРїС‹ РІ OU
             PrincipalSearchResult<Principal> groups_ou_otdel = searcher_ou_otdel.FindAll();
             List<Principal> groups_list = new List<Principal>();
             foreach (GroupPrincipal item in groups_ou_otdel)
             {
                 if (item.Description is null)
                 {
-                    MessageBox.Show("Описание группы не заполнено! " + item.Name, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹ РЅРµ Р·Р°РїРѕР»РЅРµРЅРѕ! " + item.Name, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
                 //Debug.WriteLine(item.Name);
@@ -145,7 +145,7 @@ namespace M31
             Tree treeset = new Tree(groups_list, tree_folders, ou_path);
         }
 
-        //Выбираем группу в OU Webadmin/Admin и заполняем дерево директорий
+        //Р’С‹Р±РёСЂР°РµРј РіСЂСѓРїРїСѓ РІ OU Webadmin/Admin Рё Р·Р°РїРѕР»РЅСЏРµРј РґРµСЂРµРІРѕ РґРёСЂРµРєС‚РѕСЂРёР№
         public void cmd_Resources_SelectedIndexChanged(object sender, EventArgs e)
         {
             GroupPrincipal select_gp = (GroupPrincipal)cmd_Resources.SelectedItem;
@@ -155,7 +155,7 @@ namespace M31
             {
                 if (selected_matrix != ou_path)
                 {
-                    //собираем матрицу
+                    //СЃРѕР±РёСЂР°РµРј РјР°С‚СЂРёС†Сѓ
                     //ds matrix_ds = new ds(ou_path);
                     dt matrix_dt = new dt(ou_path);
                     _dataGridView.DataSource = matrix_dt;
@@ -169,13 +169,13 @@ namespace M31
 
         }
 
-        //При выборе директории в дереве - заполняем списки доступа
+        //РџСЂРё РІС‹Р±РѕСЂРµ РґРёСЂРµРєС‚РѕСЂРёРё РІ РґРµСЂРµРІРµ - Р·Р°РїРѕР»РЅСЏРµРј СЃРїРёСЃРєРё РґРѕСЃС‚СѓРїР°
         private void tree_folders_AfterSelect(object sender, TreeViewEventArgs e)
         {
             listView_read.Items.Clear();
             var pc_ou_resources = new PrincipalContext(ContextType.Domain, domainname, ou_path);
             GroupPrincipal gp_r = GroupPrincipal.FindByIdentity(pc_ou_resources, "gss_r_" + this.tree_folders.SelectedNode.Tag);
-            // надо исключить выключенных пользователей
+            // РЅР°РґРѕ РёСЃРєР»СЋС‡РёС‚СЊ РІС‹РєР»СЋС‡РµРЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
             if (gp_r != null)
             {
                 try
@@ -189,15 +189,15 @@ namespace M31
                 }
                 catch(Exception ex)
                 {
-                    //В случае отключенных пользователей - добавляем из через DirectoryEntry
-                    if (ex.InnerException.Message == "Такой объект на сервере отсутствует.")
+                    //Р’ СЃР»СѓС‡Р°Рµ РѕС‚РєР»СЋС‡РµРЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ - РґРѕР±Р°РІР»СЏРµРј РёР· С‡РµСЂРµР· DirectoryEntry
+                    if (ex.InnerException.Message == "РўР°РєРѕР№ РѕР±СЉРµРєС‚ РЅР° СЃРµСЂРІРµСЂРµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚.")
                     {
                         listView_read.Items.Clear();
                         DirectoryEntry gp_r_de = gp_r.GetUnderlyingObject() as DirectoryEntry;
                         var members = gp_r_de.Properties["member"];
                         foreach (string member in members)
                         {
-                            if (!member.Contains("Отключенные"))
+                            if (!member.Contains("РћС‚РєР»СЋС‡РµРЅРЅС‹Рµ"))
                             {
                                 DirectoryEntry member_de = new DirectoryEntry($"LDAP://{member}");
                                 //Debug.WriteLine(member_de.Properties["Name"].Value.ToString());
@@ -226,8 +226,8 @@ namespace M31
                 }
                 catch(Exception ex)
                 {
-                    //В случае отключенных пользователей - добавляем из через DirectoryEntry
-                    if (ex.InnerException.Message == "Такой объект на сервере отсутствует.")
+                    //Р’ СЃР»СѓС‡Р°Рµ РѕС‚РєР»СЋС‡РµРЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ - РґРѕР±Р°РІР»СЏРµРј РёР· С‡РµСЂРµР· DirectoryEntry
+                    if (ex.InnerException.Message == "РўР°РєРѕР№ РѕР±СЉРµРєС‚ РЅР° СЃРµСЂРІРµСЂРµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚.")
                     {
                         listView_change.Items.Clear();
                         DirectoryEntry gp_c_de = gp_c.GetUnderlyingObject() as DirectoryEntry;
@@ -236,7 +236,7 @@ namespace M31
                         {
                             foreach (string member in members)
                             {
-                                if (!member.Contains("Отключенные"))
+                                if (!member.Contains("РћС‚РєР»СЋС‡РµРЅРЅС‹Рµ"))
                                 {
                                     DirectoryEntry member_de = new DirectoryEntry($"LDAP://{member}");
                                     ListViewItem newItem = new ListViewItem(member_de.Properties["Name"].Value.ToString());
@@ -245,7 +245,7 @@ namespace M31
                                 }
                             }
                         }
-                        Debug.WriteLine("Отключенный пользователь {0},item.Name");
+                        Debug.WriteLine("РћС‚РєР»СЋС‡РµРЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ {0},item.Name");
                     }
                 }
             }
@@ -257,7 +257,7 @@ namespace M31
         {
             if (selected_matrix != ou_path)
             {
-                //собираем матрицу
+                //СЃРѕР±РёСЂР°РµРј РјР°С‚СЂРёС†Сѓ
                 //ds matrix_ds = new ds(ou_path);
                 matrix_dt = new dt(ou_path);
                 _dataGridView.DataSource = matrix_dt;
@@ -271,7 +271,7 @@ namespace M31
         {
             if (this.tree_folders.SelectedNode is null)
             {
-                MessageBox.Show("Выберите директорию!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РґРёСЂРµРєС‚РѕСЂРёСЋ!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string groupname = "gss_r_" + this.tree_folders.SelectedNode.Tag;
@@ -280,13 +280,13 @@ namespace M31
 
         private void but_addfolder_Click(object sender, EventArgs e)
         {
-            if (this.txt_foldername.Text == "Введите имя папки" || this.txt_foldername.Text == "")
+            if (this.txt_foldername.Text == "Р’РІРµРґРёС‚Рµ РёРјСЏ РїР°РїРєРё" || this.txt_foldername.Text == "")
             {
-                MessageBox.Show("Введите имя создаваемой папки!", "Warning!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("Р’РІРµРґРёС‚Рµ РёРјСЏ СЃРѕР·РґР°РІР°РµРјРѕР№ РїР°РїРєРё!", "Warning!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 return;
             }
        
-            //Если корневых папок нет. Или она не выбрана...
+            //Р•СЃР»Рё РєРѕСЂРЅРµРІС‹С… РїР°РїРѕРє РЅРµС‚. РР»Рё РѕРЅР° РЅРµ РІС‹Р±СЂР°РЅР°...
             string folderpath = "";
             if (this.tree_folders.SelectedNode is not null)
             {
@@ -301,14 +301,14 @@ namespace M31
                 }
             }
             
-            if ( MessageBox.Show("Создаем папку " + folderpath + "\\" +  this.txt_foldername.Text + " ?", "Внимание!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            if ( MessageBox.Show("РЎРѕР·РґР°РµРј РїР°РїРєСѓ " + folderpath + "\\" +  this.txt_foldername.Text + " ?", "Р’РЅРёРјР°РЅРёРµ!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 var com_create_folder = new com_create_folder
                 {
                     _instruction = "create_folder",
                     _hostname = hostname,     // description OU
                     _drivepath = drivepath,   // description OU
-                    _folderpath = folderpath,   // дерево - description группы
+                    _folderpath = folderpath,   // РґРµСЂРµРІРѕ - description РіСЂСѓРїРїС‹
                     _foldername = this.txt_foldername.Text,   
                     _ou_path = ou_path,           // info WebAdmin group
                     _UUID = Guid.NewGuid().ToString(),
@@ -343,14 +343,14 @@ namespace M31
 
         private void but_delfolder_Click(object sender, EventArgs e)
         {
-            //if (MessageBox.Show("Удаляем папку " + folderpath + "\\" + this.txt_foldername.Text + " ?", "Внимание!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            //if (MessageBox.Show("РЈРґР°Р»СЏРµРј РїР°РїРєСѓ " + folderpath + "\\" + this.txt_foldername.Text + " ?", "Р’РЅРёРјР°РЅРёРµ!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             //{
             //    var com_create_folder = new com_create_folder
             //    {
             //        _instruction = "create_folder",
             //        _hostname = hostname,     // description OU
             //        _drivepath = drivepath,   // description OU
-            //        _folderpath = folderpath,   // дерево - description группы
+            //        _folderpath = folderpath,   // РґРµСЂРµРІРѕ - description РіСЂСѓРїРїС‹
             //        _foldername = this.txt_foldername.Text,
             //        _ou_path = ou_path,           // info WebAdmin group
             //        _UUID = Guid.NewGuid().ToString(),
@@ -400,7 +400,7 @@ namespace M31
                             username = sel.Upn.Substring(0, sel.Upn.IndexOf('@'));
                         }
 
-                        //Добавляем строку в listview
+                        //Р”РѕР±Р°РІР»СЏРµРј СЃС‚СЂРѕРєСѓ РІ listview
                         ListViewItem newItem = new ListViewItem(sel.Name);
                         newItem.Name = sel.Name;
                         if (groupname.Substring(4, 1) == "r")
@@ -413,7 +413,7 @@ namespace M31
                         }
                         else
                         {
-                            MessageBox.Show("Ошибка. Неправильное имя группы!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("РћС€РёР±РєР°. РќРµРїСЂР°РІРёР»СЊРЅРѕРµ РёРјСЏ РіСЂСѓРїРїС‹!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
 
@@ -444,7 +444,7 @@ namespace M31
         {
             if (this.tree_folders.SelectedNode is null)
             {
-                MessageBox.Show("Выберите директорию!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РґРёСЂРµРєС‚РѕСЂРёСЋ!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string groupname = "gss_c_" + this.tree_folders.SelectedNode.Tag;
@@ -461,12 +461,12 @@ namespace M31
 
             if (this.tree_folders.SelectedNode is null)
             {
-                MessageBox.Show("Выберите директорию!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РґРёСЂРµРєС‚РѕСЂРёСЋ!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (this.listView_read.CheckedItems.Count == 0)
             {
-                MessageBox.Show("Нет выбранных пользователей!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("РќРµС‚ РІС‹Р±СЂР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -478,12 +478,12 @@ namespace M31
         {
             if (this.tree_folders.SelectedNode is null)
             {
-                MessageBox.Show("Выберите директорию!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РґРёСЂРµРєС‚РѕСЂРёСЋ!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (this.listView_change.CheckedItems.Count == 0)
             {
-                MessageBox.Show("Нет выбранных пользователей!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("РќРµС‚ РІС‹Р±СЂР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string groupname = "gss_c_" + this.tree_folders.SelectedNode.Tag;
@@ -505,7 +505,7 @@ namespace M31
                 }
             }
 
-            if (MessageBox.Show("Удаляем доступ у " + string.Join(",", list_users) + " ?", "Внимание!", MessageBoxButtons.OKCancel) != DialogResult.OK)
+            if (MessageBox.Show("РЈРґР°Р»СЏРµРј РґРѕСЃС‚СѓРї Сѓ " + string.Join(",", list_users) + " ?", "Р’РЅРёРјР°РЅРёРµ!", MessageBoxButtons.OKCancel) != DialogResult.OK)
             {
                 return;
             }
